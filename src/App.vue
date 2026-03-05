@@ -5,5 +5,7 @@
 
 <script>
 import Searchview from './views/Searchview.vue';
-
+export default {
+  components: { Searchview }
+}
 </script>
