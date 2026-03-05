@@ -1,7 +1,7 @@
 <template>
     <Searchbar :query="query" @search="handlesearch"/>
-    <Loader />
-    <Searchlist />
+    <Loader v-if="isloading"/>
+    <Searchlist  v-else :results="results"/>
     
 </template>
 
