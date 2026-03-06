@@ -1,6 +1,15 @@
 <template>
     <Searchbar :query="query" @search="handlesearch"/>
     <Loader v-if="isloading"/>
+       <p v-if="query.length==0" class="text-center text-gray-500 mt-4">
+            Please enter a search query.
+
+       </p>
+    
+        <p v-else-if="!isloading && results.length === 0" class="text-center text-gray-500 mt-4">
+            No results found.
+        </p>
+    
     <Searchlist  v-else :results="results"/>
     
 </template>
@@ -22,9 +31,20 @@ export default {
    let debouncetimeout;
    
     const handlesearch = async (value) => {
+    
+
+      query.value = value
       clearTimeout(debouncetimeout)
+
+      
+      if (value.length < 3) {
+       results.value = []
+       return
+      }
+      
+
       debouncetimeout=setTimeout(async()=>{
-       query.value = value
+      
       isloading.value = true
 
       try {
@@ -36,7 +56,7 @@ export default {
       }
 
       isloading.value = false
-      },2000)
+      },1000)
      
     }
     return {
