@@ -11,7 +11,10 @@ export async function search(query) {
     ).map(product => ({
 
     title: product.title,
-    description:product.description
+    description:product.description,
+    price:product.price,
+    brand:product.brand,
+    rating:product.rating
     }
   
   

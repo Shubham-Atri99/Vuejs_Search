@@ -6,7 +6,7 @@
 
        </p>
     
-        <p v-else-if="!isloading && results.length === 0" class="text-center text-gray-500 mt-4">
+        <p v-else-if="!isloading && hassearched&& results.length === 0" class="text-center text-gray-500 mt-4">
             No results found.
         </p>
     
@@ -27,7 +27,7 @@ export default {
    const query=ref ('');
    const results=ref ([]);
    const isloading=ref(false);
-
+   const hassearched=ref(false);
    let debouncetimeout;
    
     const handlesearch = async (value) => {
@@ -39,6 +39,7 @@ export default {
       
       if (value.length < 3) {
        results.value = []
+       hassearched.value = false 
        return
       }
       
@@ -46,6 +47,7 @@ export default {
       debouncetimeout=setTimeout(async()=>{
       
       isloading.value = true
+      hassearched.value = true
 
       try {
         const data = await search(value)
@@ -63,7 +65,9 @@ export default {
         query,
         results,
         isloading,
-        handlesearch
+        handlesearch,
+        hassearched
+
     }
     }
 }
