@@ -4,7 +4,7 @@ export async function search(query) {
 
   return data.products
     .filter(product =>
-      product.title.toLowerCase().includes(query.toLowerCase()) ||
+      product.title.toLowerCase().includes(query.toLowerCase()) || //search in title and description only
       
       product.description.toLowerCase().includes(query.toLowerCase())
 

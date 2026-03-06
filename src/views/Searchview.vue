@@ -1,14 +1,15 @@
 <template>
     <Searchbar :query="query" @search="handlesearch"/>
     <Loader v-if="isloading"/>
-       <p v-if="query.length==0" class="text-center text-gray-500 mt-4">
-            Please enter a search query.
-
-       </p>
+    <Emptystate v-else-if="query.length === 0"
+         title="start searching"
+         description="please enter at least 3 characters to search."
+         />
     
-        <p v-else-if="!isloading && hassearched&& results.length === 0" class="text-center text-gray-500 mt-4">
-            No results found.
-        </p>
+      <Emptystate v-else-if="!isloading && hassearched && results.length === 0"
+        title="no results found"
+        description="try different keywords"
+       />
     
     <Searchlist  v-else :results="results"/>
     
@@ -20,14 +21,15 @@ import Searchlist from '@/components/search/Searchlist.vue';
 import Loader from '@/components/ui/Loader.vue';
 import { search } from '@/Services/api';
 import { ref } from 'vue';
+import Emptystate from '@/components/ui/Emptystate.vue';
 
 export default {
-    components: { Searchbar, Searchlist, Loader },
+    components: { Searchbar, Searchlist, Loader, Emptystate },
     setup(){
    const query=ref ('');
    const results=ref ([]);
    const isloading=ref(false);
-   const hassearched=ref(false);
+   const hassearched=ref(false); //additonal state to check if the search has been made
    let debouncetimeout;
    
     const handlesearch = async (value) => {
@@ -44,7 +46,7 @@ export default {
       }
       
 
-      debouncetimeout=setTimeout(async()=>{
+      debouncetimeout=setTimeout(async()=>{ //debounce logic to avoid unesccary api calls
       
       isloading.value = true
       hassearched.value = true
@@ -66,7 +68,8 @@ export default {
         results,
         isloading,
         handlesearch,
-        hassearched
+        hassearched,
+        Emptystate
 
     }
     }

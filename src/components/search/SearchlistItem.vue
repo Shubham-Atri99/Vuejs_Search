@@ -1,9 +1,10 @@
 <template>
   <div
     @click="toggleexpand"
-    class="bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 
-           p-6 rounded-xl shadow-md hover:shadow-lg 
-           transition duration-300 border border-gray-200"
+      class="flex flex-col justify-between
+         bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 
+         p-6 rounded-xl shadow-md hover:shadow-lg 
+         transition duration-300 border border-gray-200 h-full"
   >
     <h3 class="text-xl font-semibold text-gray-800 mb-2">
       {{ result.title }}
@@ -53,12 +54,19 @@ export default {
 <style>
 .expand-enter-active,
 .expand-leave-active {
-  transition: all 0.3s ease;
+  transition: max-height 0.35s ease, opacity 0.25s ease;
+  overflow: hidden;
 }
 
 .expand-enter-from,
 .expand-leave-to {
+  max-height: 0;
   opacity: 0;
-  transform: translateY(-10px);
+}
+
+.expand-enter-to,
+.expand-leave-from {
+  max-height: 200px; 
+  opacity: 1;
 }
 </style>

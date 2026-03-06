@@ -19,7 +19,7 @@ export default{
     },
     methods:{
         updatequery(event){
-            this.$emit('search', event.target.value);
+            this.$emit('search', event.target.value);//event emitter to send the updated query to the parent component
             console.log(event.target.value);
         }
         
