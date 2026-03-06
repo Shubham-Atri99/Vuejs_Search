@@ -18,8 +18,13 @@ export default {
    const query=ref ('');
    const results=ref ([]);
    const isloading=ref(false);
+
+   let debouncetimeout;
+   
     const handlesearch = async (value) => {
-      query.value = value
+      clearTimeout(debouncetimeout)
+      debouncetimeout=setTimeout(async()=>{
+       query.value = value
       isloading.value = true
 
       try {
@@ -31,6 +36,8 @@ export default {
       }
 
       isloading.value = false
+      },2000)
+     
     }
     return {
         query,
